@@ -1,0 +1,246 @@
+[INFO] django.utils.autoreload 2023-03-13 14:38:00,780
+	Module: "autoreload"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\utils\autoreload.py"
+	Line number: "643"
+	Message: "Watching for file changes with StatReloader"
+
+[WARNING] django.request 2023-03-13 14:38:03,182
+	Module: "log"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\utils\log.py"
+	Line number: "225"
+	Message: "Not Found: /"
+
+[WARNING] django.server 2023-03-13 14:38:03,184
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET / HTTP/1.1" 404 2276"
+
+[WARNING] django.request 2023-03-13 14:38:04,567
+	Module: "log"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\utils\log.py"
+	Line number: "225"
+	Message: "Not Found: /favicon.ico"
+
+[WARNING] django.server 2023-03-13 14:38:04,568
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /favicon.ico HTTP/1.1" 404 2327"
+
+[INFO] django.server 2023-03-13 14:38:11,978
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /admin/login/?next=/admin/ HTTP/1.1" 200 2220"
+
+[INFO] django.server 2023-03-13 14:38:12,182
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/css/base.css HTTP/1.1" 200 19513"
+
+[INFO] django.server 2023-03-13 14:38:12,193
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/css/responsive.css HTTP/1.1" 200 18575"
+
+[INFO] django.server 2023-03-13 14:38:12,210
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2616"
+
+[INFO] django.server 2023-03-13 14:38:12,213
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/css/fonts.css HTTP/1.1" 200 423"
+
+[INFO] django.server 2023-03-13 14:38:12,217
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/css/login.css HTTP/1.1" 200 954"
+
+[INFO] django.server 2023-03-13 14:38:12,228
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3401"
+
+[INFO] django.server 2023-03-13 14:38:12,316
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/fonts/Roboto-Regular-webfont.woff HTTP/1.1" 200 85876"
+
+[INFO] django.server 2023-03-13 14:38:12,316
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/fonts/Roboto-Light-webfont.woff HTTP/1.1" 200 85692"
+
+[INFO] django.server 2023-03-13 14:38:19,588
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""POST /admin/login/?next=/admin/ HTTP/1.1" 302 0"
+
+[INFO] django.server 2023-03-13 14:38:19,685
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /admin/ HTTP/1.1" 200 3560"
+
+[INFO] django.server 2023-03-13 14:38:19,723
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/css/dashboard.css HTTP/1.1" 200 380"
+
+[INFO] django.server 2023-03-13 14:38:19,777
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331"
+
+[INFO] django.server 2023-03-13 14:38:19,777
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380"
+
+[INFO] django.server 2023-03-13 14:38:19,882
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/fonts/Roboto-Bold-webfont.woff HTTP/1.1" 200 86184"
+
+[INFO] django.server 2023-03-13 14:38:21,218
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /admin/user/user/ HTTP/1.1" 200 7992"
+
+[INFO] django.server 2023-03-13 14:38:21,279
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347"
+
+[INFO] django.server 2023-03-13 14:38:21,280
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/css/changelists.css HTTP/1.1" 200 6932"
+
+[INFO] django.server 2023-03-13 14:38:21,292
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 5984"
+
+[INFO] django.server 2023-03-13 14:38:21,305
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/js/core.js HTTP/1.1" 200 5698"
+
+[INFO] django.server 2023-03-13 14:38:21,314
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/js/urlify.js HTTP/1.1" 200 7902"
+
+[INFO] django.server 2023-03-13 14:38:21,322
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/js/actions.js HTTP/1.1" 200 7872"
+
+[INFO] django.server 2023-03-13 14:38:21,329
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531"
+
+[INFO] django.server 2023-03-13 14:38:21,371
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 288580"
+
+[INFO] django.server 2023-03-13 14:38:21,411
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /admin/jsi18n/ HTTP/1.1" 200 3343"
+
+[INFO] django.server 2023-03-13 14:38:21,416
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 232381"
+
+[INFO] django.server 2023-03-13 14:38:21,437
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/img/search.svg HTTP/1.1" 200 458"
+
+[INFO] django.server 2023-03-13 14:38:21,472
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436"
+
+[INFO] django.server 2023-03-13 14:38:21,520
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331"
+
+[INFO] django.server 2023-03-13 14:38:21,521
+	Module: "basehttp"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\core\servers\basehttp.py"
+	Line number: "179"
+	Message: ""GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097"
+
+[INFO] django.utils.autoreload 2023-03-13 14:50:58,039
+	Module: "autoreload"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\utils\autoreload.py"
+	Line number: "257"
+	Message: "C:\Users\Mladen Bajic\source\repos\codebase\NBTG\backend\apps\user\migrations\0001_initial.py changed, reloading."
+
+[INFO] django.utils.autoreload 2023-03-13 14:50:59,673
+	Module: "autoreload"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\utils\autoreload.py"
+	Line number: "643"
+	Message: "Watching for file changes with StatReloader"
+
+[INFO] django.utils.autoreload 2023-03-13 14:52:35,835
+	Module: "autoreload"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\utils\autoreload.py"
+	Line number: "257"
+	Message: "C:\Users\Mladen Bajic\source\repos\codebase\NBTG\backend\apps\user\models.py changed, reloading."
+
+[INFO] django.utils.autoreload 2023-03-13 14:52:37,351
+	Module: "autoreload"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\utils\autoreload.py"
+	Line number: "643"
+	Message: "Watching for file changes with StatReloader"
+
+[INFO] django.utils.autoreload 2023-03-13 14:52:59,104
+	Module: "autoreload"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\utils\autoreload.py"
+	Line number: "257"
+	Message: "C:\Users\Mladen Bajic\source\repos\codebase\NBTG\backend\apps\user\models.py changed, reloading."
+
+[INFO] django.utils.autoreload 2023-03-13 14:53:00,329
+	Module: "autoreload"
+	Module path: "C:\Users\Mladen Bajic\.pyenv\pyenv-win\versions\3.10.0\lib\site-packages\django\utils\autoreload.py"
+	Line number: "643"
+	Message: "Watching for file changes with StatReloader"
+
