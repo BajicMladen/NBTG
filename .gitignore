@@ -1,0 +1,37 @@
+# Python / Django stuff
+*.egg-info
+*.pot
+*.log
+*.py[co]
+.tox/
+__pycache__
+MANIFEST
+dist/
+docs/_build/
+docs/locale/
+tests/coverage_html/
+tests/.coverage
+build/
+tests/report/
+logs
+staticfiles/*
+keys/*
+log/*
+backend/django-local.log
+
+# Database stuff
+*.sqlite3
+
+# Editor stuff
+.vscode
+
+# Environment variables
+.env*
+
+# Virtual environments stuff
+.python-version
+
+# Celery
+celerybeat-schedule*
+
+
