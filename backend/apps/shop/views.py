@@ -17,7 +17,12 @@ from .serializers import (
 
 
 class CategoryViewSet(
-    viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin
+    viewsets.GenericViewSet,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
 ):
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
@@ -35,7 +40,12 @@ class CategoryViewSet(
 
 
 class BrandViewSet(
-    viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin
+    viewsets.GenericViewSet,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
 ):
     def get_serializer_class(self):
         return BrandSerializer
@@ -51,7 +61,12 @@ class BrandViewSet(
 
 
 class GameViewSet(
-    viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin
+    viewsets.GenericViewSet,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
 ):
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
@@ -69,7 +84,12 @@ class GameViewSet(
 
 
 class ReviewViewSet(
-    viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin
+    viewsets.GenericViewSet,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
 ):
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
@@ -87,7 +107,12 @@ class ReviewViewSet(
 
 
 class ShippingAddressViewSet(
-    viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin
+    viewsets.GenericViewSet,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
 ):
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
@@ -105,7 +130,12 @@ class ShippingAddressViewSet(
 
 
 class OrderViewSet(
-    viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin
+    viewsets.GenericViewSet,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
 ):
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
@@ -123,7 +153,12 @@ class OrderViewSet(
 
 
 class OrderItemViewSet(
-    viewsets.GenericViewSet, mixins.ListModelMixin, mixins.RetrieveModelMixin
+    viewsets.GenericViewSet,
+    mixins.ListModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.CreateModelMixin,
+    mixins.UpdateModelMixin,
+    mixins.DestroyModelMixin,
 ):
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
