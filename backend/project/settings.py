@@ -4,11 +4,11 @@ from pathlib import Path
 
 import environ
 
+BASE_DIR = environ.Path(__file__) - 2
+
 env = environ.Env()
-env.read_env(os.getenv("ENV_FILE", ".env"))
+env.read_env(env_file=BASE_DIR(".env"))
 
-
-BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = env.str("SECRET_KEY")
 DEBUG = env.bool("DEBUG")
@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     "apps.user",
     "rest_framework",
     "corsheaders",
+    "django_filters",
 ]
 
 MIDDLEWARE = [
@@ -109,6 +110,7 @@ REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": [
         "rest_framework.renderers.JSONRenderer",
     ],
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
 }
 
 SIMPLE_JWT = {
