@@ -6,11 +6,10 @@ from .models import User
 class UserDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = [
-            "id",
-            "first_name",
-            "last_name",
-            "date_joined",
-            "email",
-            "display_name",
-        ]
+        fields = ["id", "username", "first_name", "last_name", "date_joined", "email"]
+
+
+class UserWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["first_name", "last_name", "username", "email", "password"]

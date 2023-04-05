@@ -1,14 +1,16 @@
+from django.contrib.auth.models import Group
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
 from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .models import User
-from .serializers import UserDetailSerializer
+from .serializers import UserDetailSerializer, UserWriteSerializer
 
 
 class UserViewset(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         return User.objects.all()
@@ -27,3 +29,20 @@ class UserViewset(viewsets.ModelViewSet):
             data=UserDetailSerializer(request.user).data,
             status=status.HTTP_200_OK,
         )
+
+
+class SignInViewSet(APIView):
+    permission_classes = [permissions.AllowAny]
+    http_method_names = ["post", "head"]
+
+    def post(self, request, format=None):
+
+        serializer = UserWriteSerializer(data=request.data)
+
+        if serializer.is_valid():
+            user = serializer.save()
+            user.groups.add(Group.objects.get(name="Customer"))
+            user.save()
+
+        print(user)
+        return None

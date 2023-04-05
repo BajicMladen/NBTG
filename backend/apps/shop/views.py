@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from rest_framework import decorators, mixins, status, viewsets
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import Brand, Category, Game, Order, OrderItem, Review, ShippingAddress
 from .serializers import (
@@ -16,14 +17,7 @@ from .serializers import (
 # Create your views here.
 
 
-class CategoryViewSet(
-    viewsets.GenericViewSet,
-    mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.CreateModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-):
+class CategoryViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
             return CategorySerializer
@@ -39,14 +33,7 @@ class CategoryViewSet(
             return self.get_fallback_queryset()
 
 
-class BrandViewSet(
-    viewsets.GenericViewSet,
-    mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.CreateModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-):
+class BrandViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         return BrandSerializer
 
@@ -60,14 +47,9 @@ class BrandViewSet(
             return self.get_fallback_queryset()
 
 
-class GameViewSet(
-    viewsets.GenericViewSet,
-    mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.CreateModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-):
+class GameViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
             return GameSerializer
@@ -83,14 +65,7 @@ class GameViewSet(
             return self.get_fallback_queryset()
 
 
-class ReviewViewSet(
-    viewsets.GenericViewSet,
-    mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.CreateModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-):
+class ReviewViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
             return ReviewSerializer
@@ -106,14 +81,7 @@ class ReviewViewSet(
             return self.get_fallback_queryset()
 
 
-class ShippingAddressViewSet(
-    viewsets.GenericViewSet,
-    mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.CreateModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-):
+class ShippingAddressViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
             return ShippingAddressSerializer
@@ -129,14 +97,7 @@ class ShippingAddressViewSet(
             return self.get_fallback_queryset()
 
 
-class OrderViewSet(
-    viewsets.GenericViewSet,
-    mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.CreateModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-):
+class OrderViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
             return OrderSerializer
@@ -152,14 +113,7 @@ class OrderViewSet(
             return self.get_fallback_queryset()
 
 
-class OrderItemViewSet(
-    viewsets.GenericViewSet,
-    mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.CreateModelMixin,
-    mixins.UpdateModelMixin,
-    mixins.DestroyModelMixin,
-):
+class OrderItemViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
             return OrderItemSerializer
