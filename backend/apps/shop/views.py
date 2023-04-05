@@ -1,5 +1,5 @@
-from django.shortcuts import render
 from rest_framework import viewsets
+from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import Brand, Category, Game, Order, OrderItem, Review, ShippingAddress
@@ -18,6 +18,11 @@ from .serializers import (
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
+    filter_backends = [SearchFilter, OrderingFilter]
+    filterset_fields = ["name", "popularity"]
+    search_fields = ["name", "description"]
+    ordering_fields = ["name"]
+
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
             return CategorySerializer
@@ -34,6 +39,11 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 
 class BrandViewSet(viewsets.ModelViewSet):
+    filter_backends = [SearchFilter, OrderingFilter]
+    filterset_fields = ["name", "foreign"]
+    search_fields = ["name", "description"]
+    ordering_fields = ["name", "foreign"]
+
     def get_serializer_class(self):
         return BrandSerializer
 
@@ -49,6 +59,18 @@ class BrandViewSet(viewsets.ModelViewSet):
 
 class GameViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = ["name", "description"]
+    filterset_fields = [
+        "name",
+        "min_age",
+        "count_in_stock",
+        "rating",
+        "price",
+        "category__name",
+        "brand__name",
+    ]
+    ordering_fields = ["name", "count_in_stock", "price", "min_age", "rating"]
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
@@ -66,6 +88,11 @@ class GameViewSet(viewsets.ModelViewSet):
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
+    filter_backends = [SearchFilter, OrderingFilter]
+    filterset_fields = ["title", "rating", "game__name", "user__username"]
+    search_fields = ["comment", "title"]
+    ordering_fields = ["title", "rating"]
+
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
             return ReviewSerializer
@@ -82,6 +109,11 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
 
 class ShippingAddressViewSet(viewsets.ModelViewSet):
+    filter_backends = [SearchFilter, OrderingFilter]
+    filterset_fields = ["address", "city", "postal_code", "country"]
+    search_fields = ["address", "city", "postal_code", "country"]
+    ordering_fields = ["address", "city", "postal_code", "country"]
+
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
             return ShippingAddressSerializer
@@ -98,6 +130,25 @@ class ShippingAddressViewSet(viewsets.ModelViewSet):
 
 
 class OrderViewSet(viewsets.ModelViewSet):
+    filter_backends = [SearchFilter, OrderingFilter]
+    search_fields = [
+        "user__username",
+        "address__city",
+        "address__code",
+        "address__country",
+    ]
+    filterset_fields = [
+        "user__username",
+        "payment_method",
+        "address__city",
+        "tax_price",
+        "total_price",
+        "shipping_price",
+        "paid",
+        "delivered",
+    ]
+    ordering_fields = ["total_price", "paid", "delivered"]
+
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
             return OrderSerializer
@@ -114,6 +165,11 @@ class OrderViewSet(viewsets.ModelViewSet):
 
 
 class OrderItemViewSet(viewsets.ModelViewSet):
+    filter_backends = [SearchFilter, OrderingFilter]
+    filterset_fields = ["game__id", "order__id", "quantity", "price"]
+    search_fields = ["game__name", "order__id", "postal_code", "country"]
+    ordering_fields = ["quantity", "price"]
+
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
             return OrderItemSerializer

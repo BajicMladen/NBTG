@@ -1,6 +1,5 @@
 import os
 from datetime import timedelta
-from pathlib import Path
 
 import environ
 
@@ -72,6 +71,9 @@ DATABASES = {
     },
 }
 
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = str(BASE_DIR("media"))
 
 AUTH_PASSWORD_VALIDATORS = [
     {

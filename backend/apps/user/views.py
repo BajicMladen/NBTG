@@ -1,6 +1,7 @@
 from django.contrib.auth.models import Group
 from rest_framework import permissions, status, viewsets
 from rest_framework.decorators import action
+from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -11,6 +12,10 @@ from .serializers import UserDetailSerializer, UserWriteSerializer
 
 class UserViewset(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
+    filter_backends = [SearchFilter, OrderingFilter]
+    filterset_fields = ["username"]
+    search_fields = ["username", "first_name", "last_name", "email"]
+    ordering_fields = ["username", "first_name", "last_name"]
 
     def get_queryset(self):
         return User.objects.all()
