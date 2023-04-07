@@ -3,6 +3,7 @@ from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import Brand, Category, Game, Order, OrderItem, Review, ShippingAddress
+from .pagination import CursorSetPagination, StandardResultsSetPagination
 from .serializers import (
     BrandSerializer,
     CategorySerializer,
@@ -22,6 +23,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
     filterset_fields = ["name", "popularity"]
     search_fields = ["name", "description"]
     ordering_fields = ["name"]
+    pagination_class = StandardResultsSetPagination
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
@@ -43,6 +45,7 @@ class BrandViewSet(viewsets.ModelViewSet):
     filterset_fields = ["name", "foreign"]
     search_fields = ["name", "description"]
     ordering_fields = ["name", "foreign"]
+    pagination_class = StandardResultsSetPagination
 
     def get_serializer_class(self):
         return BrandSerializer
@@ -71,6 +74,7 @@ class GameViewSet(viewsets.ModelViewSet):
         "brand__name",
     ]
     ordering_fields = ["name", "count_in_stock", "price", "min_age", "rating"]
+    pagination_class = StandardResultsSetPagination
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
@@ -92,6 +96,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
     filterset_fields = ["title", "rating", "game__name", "user__username"]
     search_fields = ["comment", "title"]
     ordering_fields = ["title", "rating"]
+    pagination_class = StandardResultsSetPagination
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
@@ -113,6 +118,7 @@ class ShippingAddressViewSet(viewsets.ModelViewSet):
     filterset_fields = ["address", "city", "postal_code", "country"]
     search_fields = ["address", "city", "postal_code", "country"]
     ordering_fields = ["address", "city", "postal_code", "country"]
+    pagination_class = StandardResultsSetPagination
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
@@ -148,6 +154,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         "delivered",
     ]
     ordering_fields = ["total_price", "paid", "delivered"]
+    pagination_class = StandardResultsSetPagination
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
@@ -169,6 +176,7 @@ class OrderItemViewSet(viewsets.ModelViewSet):
     filterset_fields = ["game__id", "order__id", "quantity", "price"]
     search_fields = ["game__name", "order__id", "postal_code", "country"]
     ordering_fields = ["quantity", "price"]
+    pagination_class = StandardResultsSetPagination
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
