@@ -46,6 +46,7 @@ class SignInViewSet(APIView):
         if serializer.is_valid():
             user = serializer.save()
             user.groups.add(Group.objects.get(name="Customer"))
+            user.set_password(user.password)
             user.save()
 
         return Response(
