@@ -13,4 +13,16 @@ urlpatterns = [
     path("sign-in/", SignInViewSet.as_view()),
     path("token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path(
+        "password_reset/",
+        include("django_rest_passwordreset.urls", namespace="password_reset"),
+    ),
+    path(
+        "password_reset/confirm/",
+        include("django_rest_passwordreset.urls", namespace="password_reset_confirm"),
+    ),
+    path(
+        "password_reset/validate_token/",
+        include("django_rest_passwordreset.urls", namespace="password_reset_validate"),
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

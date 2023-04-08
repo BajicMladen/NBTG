@@ -41,7 +41,6 @@ class SignInViewSet(APIView):
     http_method_names = ["post", "head"]
 
     def post(self, request, format=None):
-
         serializer = UserWriteSerializer(data=request.data)
 
         if serializer.is_valid():
@@ -49,5 +48,7 @@ class SignInViewSet(APIView):
             user.groups.add(Group.objects.get(name="Customer"))
             user.save()
 
-        print(user)
-        return None
+        return Response(
+            data=UserDetailSerializer(user).data,
+            status=status.HTTP_200_OK,
+        )
