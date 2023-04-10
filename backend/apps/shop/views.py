@@ -3,7 +3,7 @@ from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from .models import Brand, Category, Game, Order, OrderItem, Review, ShippingAddress
-from .pagination import CursorSetPagination, StandardResultsSetPagination
+from .pagination import StandardResultsSetPagination
 from .serializers import (
     BrandSerializer,
     CategorySerializer,
