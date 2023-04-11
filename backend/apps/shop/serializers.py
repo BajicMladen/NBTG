@@ -40,6 +40,7 @@ class GameWriteSerializer(serializers.ModelSerializer):
             "min_age",
             "description",
             "rating",
+            "count_in_stock",
             "price",
         ]
 
