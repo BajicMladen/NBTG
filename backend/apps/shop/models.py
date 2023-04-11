@@ -26,6 +26,9 @@ class Brand(models.Model):
     link = models.URLField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Game(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
@@ -47,8 +50,8 @@ class Game(models.Model):
 
 
 class Review(models.Model):
-    game = models.ForeignKey(Game, on_delete=models.SET_NULL, null=True)
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=200, null=True, blank=True)
     rating = models.IntegerField(
         null=True,
@@ -64,6 +67,7 @@ class Review(models.Model):
 
 
 class ShippingAddress(models.Model):
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     address = models.CharField(max_length=200, null=True, blank=True)
     city = models.CharField(max_length=200, null=True, blank=True)
     postal_code = models.CharField(max_length=200, null=True, blank=True)
@@ -74,7 +78,7 @@ class ShippingAddress(models.Model):
 
 
 class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     payment_method = models.CharField(max_length=200, null=True, blank=True)
     address = models.ForeignKey(ShippingAddress, on_delete=models.SET_NULL, null=True)
     tax_price = models.DecimalField(
@@ -97,8 +101,8 @@ class Order(models.Model):
 
 
 class OrderItem(models.Model):
-    game = models.ForeignKey(Game, on_delete=models.SET_NULL, null=True)
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, null=True)
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, null=True)
     quantity = models.IntegerField(null=True, blank=True, default=0)
     price = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
 

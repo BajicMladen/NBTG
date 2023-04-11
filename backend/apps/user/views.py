@@ -10,15 +10,21 @@ from .models import User
 from .serializers import UserDetailSerializer, UserWriteSerializer
 
 
+def isAdmin(user):
+    return user.groups.filter(name="Admin").exists()
+
+
 class UserViewset(viewsets.ModelViewSet):
-    permission_classes = [permissions.IsAuthenticated]
     filter_backends = [SearchFilter, OrderingFilter]
     filterset_fields = ["username"]
     search_fields = ["username", "first_name", "last_name", "email"]
     ordering_fields = ["username", "first_name", "last_name"]
 
     def get_queryset(self):
-        return User.objects.all()
+        if isAdmin(self.request.user):
+            return User.objects.all()
+        else:
+            return User.objects.filter(id=self.request.user.id)
 
     def get_serializer_class(self):
         return UserDetailSerializer

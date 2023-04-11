@@ -31,7 +31,17 @@ class GameSerializer(serializers.ModelSerializer):
 class GameWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
-        fields = ["user", "name", "image", "min_age", "description", "rating", "price"]
+        fields = [
+            "user",
+            "category",
+            "brand",
+            "name",
+            "image",
+            "min_age",
+            "description",
+            "rating",
+            "price",
+        ]
 
 
 class ReviewSerializer(serializers.ModelSerializer):

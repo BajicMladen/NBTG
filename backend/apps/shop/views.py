@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.filters import OrderingFilter, SearchFilter
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import DjangoModelPermissions, IsAuthenticatedOrReadOnly
 
 from .models import Brand, Category, Game, Order, OrderItem, Review, ShippingAddress
 from .pagination import StandardResultsSetPagination
@@ -16,6 +16,10 @@ from .serializers import (
 )
 
 # Create your views here.
+
+
+def isAdmin(user):
+    return user.groups.filter(name="Admin").exists()
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -61,7 +65,6 @@ class BrandViewSet(viewsets.ModelViewSet):
 
 
 class GameViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ["name", "description"]
     filterset_fields = [
@@ -75,6 +78,17 @@ class GameViewSet(viewsets.ModelViewSet):
     ]
     ordering_fields = ["name", "count_in_stock", "price", "min_age", "rating"]
     pagination_class = StandardResultsSetPagination
+
+    def get_permissions(self):
+        if self.action in ["list", "retrieve"]:
+            permission_classes = [
+                IsAuthenticatedOrReadOnly,
+            ]
+        else:
+            permission_classes = [
+                DjangoModelPermissions,
+            ]
+        return [permission() for permission in permission_classes]
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
@@ -103,13 +117,19 @@ class ReviewViewSet(viewsets.ModelViewSet):
             return ReviewSerializer
         return ReviewSerializer
 
-    def get_fallback_queryset(self):
+    def get_queryset_for_admins(self):
         return Review.objects.all()
 
+    def get_fallback_queryset(self):
+        if self.action in ["list", "retrieve"]:
+            return Review.objects.all()
+        else:
+            return Review.objects.filter(user_id=self.request.user.id)
+
     def get_queryset(self):
-        try:
-            return super().get_queryset()
-        except AssertionError:
+        if isAdmin(self.request.user):
+            return self.get_queryset_for_admins()
+        else:
             return self.get_fallback_queryset()
 
 
@@ -125,13 +145,16 @@ class ShippingAddressViewSet(viewsets.ModelViewSet):
             return ShippingAddressSerializer
         return ShippingAddressSerializer
 
-    def get_fallback_queryset(self):
+    def get_queryset_for_admins(self):
         return ShippingAddress.objects.all()
 
+    def get_fallback_queryset(self):
+        return ShippingAddress.objects.filter(user_id=self.request.user.id)
+
     def get_queryset(self):
-        try:
-            return super().get_queryset()
-        except AssertionError:
+        if isAdmin(self.request.user):
+            return self.get_queryset_for_admins()
+        else:
             return self.get_fallback_queryset()
 
 
@@ -161,13 +184,16 @@ class OrderViewSet(viewsets.ModelViewSet):
             return OrderSerializer
         return OrderSerializer
 
-    def get_fallback_queryset(self):
+    def get_queryset_for_admins(self):
         return Order.objects.all()
 
+    def get_fallback_queryset(self):
+        return Order.objects.filter(user_id=self.request.user.id)
+
     def get_queryset(self):
-        try:
-            return super().get_queryset()
-        except AssertionError:
+        if isAdmin(self.request.user):
+            return self.get_queryset_for_admins()
+        else:
             return self.get_fallback_queryset()
 
 
@@ -183,11 +209,14 @@ class OrderItemViewSet(viewsets.ModelViewSet):
             return OrderItemSerializer
         return OrderItemSerializer
 
-    def get_fallback_queryset(self):
+    def get_queryset_for_admins(self):
         return OrderItem.objects.all()
 
+    def get_fallback_queryset(self):
+        return OrderItem.objects.filter(order_id__in=self.request.user.order_set.all())
+
     def get_queryset(self):
-        try:
-            return super().get_queryset()
-        except AssertionError:
+        if isAdmin(self.request.user):
+            return self.get_queryset_for_admins()
+        else:
             return self.get_fallback_queryset()
