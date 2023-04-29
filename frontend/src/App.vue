@@ -5,9 +5,9 @@ import TradeMark from './components/layout/TradeMark.vue'
 </script>
 
 <template>
-  <div class="flex flex-col justify-between m-0 p-0 h-screen w-full">
+  <div class="flex flex-col justify-between m-0 p-0">
     <Header></Header>
-    <RouterView />
+    <RouterView class="h-full" />
     <TradeMark />
   </div>
 </template>

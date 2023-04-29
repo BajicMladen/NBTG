@@ -23,9 +23,31 @@ class BrandSerializer(serializers.ModelSerializer):
 
 
 class GameSerializer(serializers.ModelSerializer):
+    category = serializers.SerializerMethodField()
+    brand = serializers.SerializerMethodField()
+
     class Meta:
         model = Game
-        fields = "__all__"
+        fields = [
+            "id",
+            "user",
+            "category",
+            "brand",
+            "name",
+            "image",
+            "min_age",
+            "description",
+            "rating",
+            "count_in_stock",
+            "price",
+            "created_at",
+        ]
+
+    def get_category(self, instance):
+        return instance.category.name if instance.category else None
+
+    def get_brand(self, instance):
+        return instance.brand.name if instance.brand else None
 
 
 class GameWriteSerializer(serializers.ModelSerializer):
