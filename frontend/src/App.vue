@@ -7,7 +7,7 @@ import TradeMark from './components/layout/TradeMark.vue'
 <template>
   <div class="flex flex-col justify-between m-0 p-0">
     <Header></Header>
-    <RouterView class="h-full" />
+    <RouterView class="h-full px-24" />
     <TradeMark />
   </div>
 </template>

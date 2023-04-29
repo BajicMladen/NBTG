@@ -21,7 +21,12 @@ function goToSingleItemPage() {
     <div class="w-52 h-36 border-2 border-b-gray-400">
       <img :src="item.image ?? boardGame" alt="item_img.png" class="max-h-full" />
     </div>
-    <div class="mt-2 text-lg">{{ item.name }}</div>
+    <div class="flex flex-row justify-between">
+      <div class="mt-2 text-lg">{{ item.name }}</div>
+      <div class="mt-3 bg-red-400 w-24 text-white rounded-md text-center">
+        {{ item.category }}
+      </div>
+    </div>
     <div class="mt-2">
       <div>Rating {{ item.rating }}</div>
       <div>124 reviews</div>
@@ -29,7 +34,7 @@ function goToSingleItemPage() {
     <div class="flex flex-row justify-between">
       <div class="mt-2 text-xl">{{ item.price }}$</div>
       <div class="mt-3 bg-gray-500 w-24 text-white rounded-md text-center">
-        {{ item.count_in_stock }} in stock
+        {{ item.count_in_stock > 0 ? item.count_in_stock : 0 }} in stock
       </div>
     </div>
   </div>

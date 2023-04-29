@@ -11,7 +11,8 @@ const router = createRouter({
     {
       path: '/game/:id',
       name: 'singleGamePage',
-      component: () => import('../views/SingleGameView.vue')
+      component: () => import('../views/SingleGameView.vue'),
+      props: true
     },
     {
       path: '/about',
