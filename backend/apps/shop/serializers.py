@@ -25,6 +25,7 @@ class BrandSerializer(serializers.ModelSerializer):
 class GameSerializer(serializers.ModelSerializer):
     category = serializers.SerializerMethodField()
     brand = serializers.SerializerMethodField()
+    num_of_reviews = serializers.SerializerMethodField()
 
     class Meta:
         model = Game
@@ -41,6 +42,7 @@ class GameSerializer(serializers.ModelSerializer):
             "count_in_stock",
             "price",
             "created_at",
+            "num_of_reviews",
         ]
 
     def get_category(self, instance):
@@ -48,6 +50,9 @@ class GameSerializer(serializers.ModelSerializer):
 
     def get_brand(self, instance):
         return instance.brand.name if instance.brand else None
+
+    def get_num_of_reviews(self, instance):
+        return instance.review_set.all().count()
 
 
 class GameWriteSerializer(serializers.ModelSerializer):

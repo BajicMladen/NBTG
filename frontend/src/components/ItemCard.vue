@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref, onMounted, mergeProps } from 'vue'
 import { useRouter } from 'vue-router'
 import boardGame from '../assets/board-games.png'
 
@@ -17,7 +16,10 @@ function goToSingleItemPage() {
 </script>
 
 <template>
-  <div class="flex flex-col p-4 w-60 h-auto border-2 border-gray-400" @click="goToSingleItemPage">
+  <div
+    class="flex flex-col p-4 w-60 h-auto border-2 border-gray-400 cursor-pointer"
+    @click="goToSingleItemPage"
+  >
     <div class="w-52 h-36 border-2 border-b-gray-400">
       <img :src="item.image ?? boardGame" alt="item_img.png" class="max-h-full" />
     </div>
