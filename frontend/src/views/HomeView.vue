@@ -33,7 +33,7 @@ onMounted(() => {
     <div class="flex flex-col justify-center items-center mt-10">
       <div class="text-3xl mb-10">List of Games</div>
       <div class="flex flex-row flex-wrap">
-        <ItemCard v-for="game in games" :item="game" :key="game.id" class="mr-5 mb-4"></ItemCard>
+        <ItemCard v-for="game in games" :item="game" :key="game.id" class="mr-3 mb-3"></ItemCard>
       </div>
     </div>
   </div>

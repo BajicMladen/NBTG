@@ -31,7 +31,7 @@ function goToSingleItemPage() {
     </div>
     <div class="mt-2">
       <div>Rating {{ item.rating }}</div>
-      <div>124 reviews</div>
+      <div>{{ item.num_of_reviews }} reviews</div>
     </div>
     <div class="flex flex-row justify-between">
       <div class="mt-2 text-xl">{{ item.price }}$</div>

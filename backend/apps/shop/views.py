@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import DjangoModelPermissions, IsAuthenticatedOrReadOnly
@@ -65,7 +66,7 @@ class BrandViewSet(viewsets.ModelViewSet):
 
 
 class GameViewSet(viewsets.ModelViewSet):
-    filter_backends = [SearchFilter, OrderingFilter]
+    filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
     search_fields = ["name", "description"]
     filterset_fields = [
         "name",
@@ -106,11 +107,22 @@ class GameViewSet(viewsets.ModelViewSet):
 
 
 class ReviewViewSet(viewsets.ModelViewSet):
-    filter_backends = [SearchFilter, OrderingFilter]
-    filterset_fields = ["title", "rating", "game__name", "user__username"]
+    filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
+    filterset_fields = ["title", "rating", "game__id", "game__name", "user__username"]
     search_fields = ["comment", "title"]
     ordering_fields = ["title", "rating"]
     pagination_class = StandardResultsSetPagination
+
+    def get_permissions(self):
+        if self.action in ["list", "retrieve"]:
+            permission_classes = [
+                IsAuthenticatedOrReadOnly,
+            ]
+        else:
+            permission_classes = [
+                DjangoModelPermissions,
+            ]
+        return [permission() for permission in permission_classes]
 
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
