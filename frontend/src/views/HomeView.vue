@@ -1,17 +1,37 @@
 <script setup lang="ts">
 import ItemCard from '@/components/ItemCard.vue'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { fetchGames } from '../api/index'
 import 'vue3-carousel/dist/carousel.css'
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel'
+import { Carousel, Slide, Pagination as Pag, Navigation } from 'vue3-carousel'
 import boardGame from '../assets/board-games.png'
+import { debounce } from 'lodash'
 
 let games = ref([])
+let search = ref('')
+let currentPage = ref(1)
+let pages = ref()
 
-async function getGames() {
-  const data = await fetchGames()
+async function getGames(params: object = {}) {
+  const data = await fetchGames(params)
+  pages.value = Math.floor(data.data.count/5)
   games.value = data.data.results
 }
+
+watch(
+  search,
+  debounce(() => {
+    console.log(search.value)
+    getGames({ search: search.value })
+  }, 500)
+)
+
+watch(
+  currentPage,
+  () => {
+    getGames({ page: currentPage.value })
+  }
+)
 
 onMounted(() => {
   getGames()
@@ -27,14 +47,23 @@ onMounted(() => {
       </slide>
       <template #addons>
         <navigation />
-        <pagination />
+        <Pag/>
       </template>
     </carousel>
-    <div class="flex flex-col justify-center items-center mt-10">
+    <div class="flex flex-col mt-10">
       <div class="text-3xl mb-10">List of Games</div>
+      <div class="flex flex-row">
+        <div class="mr-3 text-xl">Search:</div>
+        <input type="search" class="border-2 border-black mb-4 w-40 h-8" v-model="search" />
+      </div>
       <div class="flex flex-row flex-wrap">
         <ItemCard v-for="game in games" :item="game" :key="game.id" class="mr-3 mb-3"></ItemCard>
       </div>
+      <va-pagination
+        v-model="currentPage"
+        :pages="pages"
+        :visible-pages="pages"
+      />
     </div>
   </div>
 </template>

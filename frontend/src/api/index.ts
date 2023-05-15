@@ -1,7 +1,7 @@
 import { api } from '../../axios/instance/api'
 
-export const fetchGames = async () => {
-  return api.get('api/game')
+export const fetchGames = async (params) => {
+  return api.get('api/game', { params })
 }
 
 export const fetchGame = (id: string) => {

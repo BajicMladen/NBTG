@@ -25,7 +25,7 @@ function goToSingleItemPage() {
     </div>
     <div class="flex flex-row justify-between">
       <div class="mt-2 text-lg">{{ item.name }}</div>
-      <div class="mt-3 bg-red-400 w-24 text-white rounded-md text-center">
+      <div class="mt-3 bg-red-400 w-24 text-white h-6 rounded-md text-center">
         {{ item.category }}
       </div>
     </div>
