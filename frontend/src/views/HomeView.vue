@@ -14,7 +14,7 @@ let pages = ref()
 
 async function getGames(params: object = {}) {
   const data = await fetchGames(params)
-  pages.value = Math.floor(data.data.count/5)
+  pages.value = Math.floor(data.data.count / 5)
   games.value = data.data.results
 }
 
@@ -26,12 +26,9 @@ watch(
   }, 500)
 )
 
-watch(
-  currentPage,
-  () => {
-    getGames({ page: currentPage.value })
-  }
-)
+watch(currentPage, () => {
+  getGames({ page: currentPage.value })
+})
 
 onMounted(() => {
   getGames()
@@ -47,7 +44,7 @@ onMounted(() => {
       </slide>
       <template #addons>
         <navigation />
-        <Pag/>
+        <Pag />
       </template>
     </carousel>
     <div class="flex flex-col mt-10">
@@ -59,11 +56,7 @@ onMounted(() => {
       <div class="flex flex-row flex-wrap">
         <ItemCard v-for="game in games" :item="game" :key="game.id" class="mr-3 mb-3"></ItemCard>
       </div>
-      <va-pagination
-        v-model="currentPage"
-        :pages="pages"
-        :visible-pages="pages"
-      />
+      <va-pagination v-model="currentPage" :pages="pages" :visible-pages="pages" />
     </div>
   </div>
 </template>

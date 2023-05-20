@@ -12,7 +12,7 @@ function goToHomePage() {
 </script>
 
 <template>
-  <div class="flex flex-row items-center justify-between px-32 mb-10 bg-slate-600 h-20">
+  <div class="flex flex-row items-center justify-between px-32 mb-10 bg-slate-600 h-14">
     <div class="text-2xl text-white cursor-pointer" @click="goToHomePage">NBTG</div>
     <div class="flex flex-row text-white text-lg">
       <div class="flex flex-row">

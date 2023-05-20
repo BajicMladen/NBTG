@@ -1,9 +1,12 @@
 import axios from 'axios'
 import { NBTG_BASE_URL } from '../../src/environment'
+import { useTokenInterceptors } from '../inteceptors'
 
 const base = axios.create({
   baseURL: 'http://127.0.0.1:8000/'
 })
+
+useTokenInterceptors(base)
 
 const AXIOS_METHODS = ['request', 'get', 'delete', 'head', 'options', 'post', 'put', 'patch']
 

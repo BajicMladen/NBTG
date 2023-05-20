@@ -1,14 +1,12 @@
-// import { NBTG_API_URL, NBTG_BASE_URL } from '../../src/environment'
-// import { baseControllers } from '@/axios/controllers.js'
-
-// export const useTokenInterceptors = (instance) => {
-//   instance.instance.request.use(async (config) => {
-//     const url = new URL(config.url, config.baseURL).href
-
-//     if (url.includes(NBTG_BASE_URL)) {
-//       baseControllers[url] = new AbortController()
-//       config.signal = baseControllers[url].signal
-
-//     }
-//   })
-// }
+export const useTokenInterceptors = (instance) => {
+  instance.interceptors.request.use(
+    async (config) => {
+      const tokens = JSON.parse(localStorage.getItem('tokens'))
+      if (tokens) {
+        config.headers.Authorization = `Bearer ${tokens.access}`
+      }
+      return config
+    },
+    (error) => Promise.reject(error)
+  )
+}

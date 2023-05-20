@@ -1,19 +1,37 @@
 <script setup lang="ts">
+import { signUp, logIn } from '@/api/auth'
 import { ref } from 'vue'
-import { logIn, getCurrentUser } from '@/api/auth'
 import { useForm } from 'vuestic-ui'
-import { RouterLink, useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
+import { RouterLink, useRouter } from 'vue-router'
 
 const toast = useToast()
 const router = useRouter()
 
 let formData = ref({
+  firstName: '',
+  lastName: '',
   username: '',
+  email: '',
   password: ''
 })
 
 const handleSubmit = async () => {
+  const { data, error } = await signUp(formData.value)
+
+  if (error) {
+    toast.error('Something went wrong, please try again', {
+      timeout: 2000
+    })
+    return
+  }
+  localStorage.setItem('userData', JSON.stringify(data))
+
+  await getToken()
+  router.push({ name: 'home' })
+}
+
+const getToken = async () => {
   const { data, error } = await logIn(formData.value)
 
   if (error) {
@@ -23,21 +41,6 @@ const handleSubmit = async () => {
     return
   }
   localStorage.setItem('tokens', JSON.stringify(data))
-
-  await getUserData()
-
-  router.push({ name: 'home' })
-}
-
-const getUserData = async () => {
-  const { data, error } = await getCurrentUser()
-  if (error) {
-    toast.error('Something went wrong, please try again', {
-      timeout: 2000
-    })
-    return
-  }
-  localStorage.setItem('userData', JSON.stringify(data))
 }
 
 const { isValid, validate } = useForm('formRef')
@@ -48,12 +51,33 @@ let isPasswordVisible = ref(false)
 <template>
   <div class="flex h-96 items-center justify-center">
     <va-form class="flex flex-col justify-center w-3/12 rounded-2xl" tag="form" ref="formRef">
-      <div class="mb-8 mt-4 text-center font-semibold text-2xl">Log In</div>
+      <div class="mb-8 mt-4 text-center font-semibold text-2xl">Sign Up</div>
+      <va-input
+        v-model="formData.firstName"
+        label="First Name"
+        class="mb-6"
+        :rules="[(v) => Boolean(v) || 'First name is required']"
+      />
+
+      <va-input
+        v-model="formData.lastName"
+        label="Last Name"
+        class="mb-6"
+        :rules="[(v) => Boolean(v) || 'Last Name is required']"
+      />
+
       <va-input
         v-model="formData.username"
         label="Username"
         class="mb-6"
         :rules="[(v) => Boolean(v) || 'Username is required']"
+      />
+
+      <va-input
+        v-model="formData.email"
+        label="Email"
+        class="mb-6"
+        :rules="[(v) => Boolean(v) || 'Email is required']"
       />
 
       <va-input
@@ -76,12 +100,12 @@ let isPasswordVisible = ref(false)
         </template>
       </va-input>
       <div class="flex flex-row mt-1">
-        <div class="text-xs">You don't have and account?</div>
-        <RouterLink to="/signup" class="text-xs ml-1 text-blue-500 underline">Signup</RouterLink>
+        <div class="text-xs">You already have an account?</div>
+        <RouterLink to="/login" class="text-xs ml-1 text-blue-500 underline">Login</RouterLink>
       </div>
 
       <va-button class="mt-6" :disabled="!isValid" @click="validate() && handleSubmit()">
-        Login
+        Signup
       </va-button>
     </va-form>
   </div>
