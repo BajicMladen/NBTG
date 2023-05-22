@@ -37,6 +37,7 @@ class Game(models.Model):
     )
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=200, null=True, blank=True)
+    stripe_code = models.CharField(max_length=200, null=True, blank=True)
     image = models.ImageField(null=True, blank=True, default="/placeholder.png")
     min_age = models.IntegerField(null=True, blank=True, default=0)
     description = models.TextField(null=True, blank=True)

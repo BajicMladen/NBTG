@@ -33,6 +33,7 @@ class GameSerializer(serializers.ModelSerializer):
             "id",
             "user",
             "category",
+            "stripe_code",
             "brand",
             "name",
             "image",

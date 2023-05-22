@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useUserStore } from '@/store/userStore'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -6,12 +7,20 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('../views/Login.vue')
+      component: () => import('../views/Login.vue'),
+      beforeEnter: (to, from) => {
+        const user = useUserStore()
+        if (user.isLoggedIn) return from
+      }
     },
     {
       path: '/signup',
       name: 'signup',
-      component: () => import('../views/Signup.vue')
+      component: () => import('../views/Signup.vue'),
+      beforeEnter: (to, from) => {
+        const user = useUserStore()
+        if (user.isLoggedIn) return from
+      }
     },
     {
       path: '/',
@@ -28,6 +37,24 @@ const router = createRouter({
       path: '/cart',
       name: 'cart',
       component: () => import('../views/Cart.vue')
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: () => import('../views/Profile.vue'),
+      beforeEnter: (to, from) => {
+        const user = useUserStore()
+        if (!user.isLoggedIn) return from
+      }
+    },
+    {
+      path: '/success',
+      name: 'success',
+      component: () => import('../views/Success.vue'),
+      beforeEnter: (to, from) => {
+        const user = useUserStore()
+        if (!user.isLoggedIn) return from
+      }
     }
   ]
 })

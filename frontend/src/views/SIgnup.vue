@@ -4,6 +4,9 @@ import { ref } from 'vue'
 import { useForm } from 'vuestic-ui'
 import { useToast } from 'vue-toastification'
 import { RouterLink, useRouter } from 'vue-router'
+import { useUserStore } from '@/store/userStore'
+
+const user = useUserStore()
 
 const toast = useToast()
 const router = useRouter()
@@ -26,6 +29,12 @@ const handleSubmit = async () => {
     return
   }
   localStorage.setItem('userData', JSON.stringify(data))
+  user.setUser({
+    firstName: data.first_name,
+    lastName: data.last_name,
+    email: data.email,
+    username: data.username
+  })
 
   await getToken()
   router.push({ name: 'home' })

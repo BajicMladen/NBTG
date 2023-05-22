@@ -2,6 +2,21 @@
 import { RouterView } from 'vue-router'
 import Header from './components/layout/Header.vue'
 import TradeMark from './components/layout/TradeMark.vue'
+
+import { useUserStore } from '@/store/userStore'
+
+const user = useUserStore()
+
+const userData = JSON.parse(localStorage.getItem('userData'))
+
+if (userData) {
+  user.setUser({
+    firstName: userData.first_name,
+    lastName: userData.last_name,
+    email: userData.email,
+    username: userData.username
+  })
+}
 </script>
 
 <template>

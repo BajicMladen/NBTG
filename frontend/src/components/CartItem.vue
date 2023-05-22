@@ -13,7 +13,6 @@ const props = defineProps({
 })
 
 onMounted(() => {
-  console.log(props.item.qty)
   qty.value = props.item.qty
 })
 </script>

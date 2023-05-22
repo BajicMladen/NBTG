@@ -11,3 +11,7 @@ export const fetchGame = (id: string) => {
 export const fetchReviews = (id: string) => {
   return api.get(`api/review?game__id=${id}`)
 }
+
+export const fetchAddress = () => {
+  return api.get('api/shipping-address')
+}

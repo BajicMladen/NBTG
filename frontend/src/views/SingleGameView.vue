@@ -3,6 +3,9 @@ import { onMounted, ref } from 'vue'
 import { fetchGame, fetchReviews } from '../api/index'
 import boardGame from '../assets/board-games.png'
 import ReviewCard from '@/components/ReviewCard.vue'
+import { useToast } from 'vue-toastification'
+
+const toast = useToast()
 
 const props = defineProps({
   id: {
@@ -37,10 +40,27 @@ function addItemToCart() {
   let cart = localStorage.getItem('cart')
   if (!cart) {
     localStorage.setItem('cart', JSON.stringify([]))
-    cart = []
+    cart = localStorage.getItem('cart')
   }
   let cart1 = JSON.parse(cart)
-  localStorage.setItem('cart', JSON.stringify([...cart1, { qty: qty.value, ...game.value }]))
+  let itemAlreadyExist = false
+
+  const cart2 = cart1.map((x) => {
+    if (x.id == game.value.id) {
+      x.qty = x.qty + qty.value
+      itemAlreadyExist = true
+    }
+    return x
+  })
+
+  if (itemAlreadyExist) {
+    localStorage.setItem('cart', JSON.stringify(cart2))
+  } else {
+    localStorage.setItem('cart', JSON.stringify([...cart1, { qty: qty.value, ...game.value }]))
+  }
+  toast.success('Item added to cart!', {
+    timeout: 2000
+  })
 }
 onMounted(() => {
   getGames(props.id)
@@ -61,11 +81,11 @@ onMounted(() => {
       <div class="border-2 border-black px-5 h-fit text-xl">
         <div class="flex flex-row justify-between mt-4 w-52">
           <div>Price:</div>
-          <div>199$</div>
+          <div>{{ game.price * qty }}$</div>
         </div>
         <div class="flex flex-row justify-between mt-8">
           <div>Status:</div>
-          <div>In Stock</div>
+          <div>{{ game.count_in_stock > 0 ? 'In Stock' : 'Out of Stock' }}</div>
         </div>
         <div class="flex flex-row justify-between mt-8">
           <div>Quantity:</div>
@@ -79,7 +99,9 @@ onMounted(() => {
           />
         </div>
         <div class="flex flex-row justify-center mt-10 mb-6">
-          <button class="bg-slate-500 rounded-lg p-1" @click="addItemToCart">Add To Cart</button>
+          <button class="w-40 bg-blue-700 text-white rounded-lg p-1 text-md" @click="addItemToCart">
+            Add To Cart
+          </button>
         </div>
       </div>
     </div>

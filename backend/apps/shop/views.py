@@ -161,7 +161,7 @@ class ShippingAddressViewSet(viewsets.ModelViewSet):
         return ShippingAddress.objects.all()
 
     def get_fallback_queryset(self):
-        return ShippingAddress.objects.filter(user_id=self.request.user.id)
+        return ShippingAddress.objects.filter(created_by_id=self.request.user.id)
 
     def get_queryset(self):
         if isAdmin(self.request.user):
