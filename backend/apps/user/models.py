@@ -12,6 +12,7 @@ from .managers import UserManager
 
 class User(TimestampedModelMixin, AbstractUser):
     email = models.EmailField("Email address", unique=True)
+    image = models.ImageField(null=True, blank=True)
     objects = UserManager()
 
     class Meta:

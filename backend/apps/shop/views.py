@@ -1,7 +1,9 @@
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import DjangoModelPermissions, IsAuthenticatedOrReadOnly
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 from .models import Brand, Category, Game, Order, OrderItem, Review, ShippingAddress
 from .pagination import StandardResultsSetPagination
@@ -11,8 +13,11 @@ from .serializers import (
     GameSerializer,
     GameWriteSerializer,
     OrderItemSerializer,
+    OrderItemWriteSerializer,
     OrderSerializer,
+    OrderWriteSerializer,
     ReviewSerializer,
+    ReviewWriteSerializer,
     ShippingAddressSerializer,
 )
 
@@ -127,7 +132,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
             return ReviewSerializer
-        return ReviewSerializer
+        return ReviewWriteSerializer
 
     def get_queryset_for_admins(self):
         return Review.objects.all()
@@ -194,7 +199,7 @@ class OrderViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
             return OrderSerializer
-        return OrderSerializer
+        return OrderWriteSerializer
 
     def get_queryset_for_admins(self):
         return Order.objects.all()
@@ -207,6 +212,44 @@ class OrderViewSet(viewsets.ModelViewSet):
             return self.get_queryset_for_admins()
         else:
             return self.get_fallback_queryset()
+        
+    @action(
+        detail=False,
+        methods=["post"],
+        url_path="create_order",
+        # permission_classes=[permissions.IsAuthenticated],
+    )
+    def create_order(self, request):
+
+        address = ShippingAddress.objects.get(id=request.data['address'])
+
+        order_data = {
+            "user": request.user,
+            "address": address,
+            "total_price": request.data['price']
+        }
+
+        order_items = request.data['items']
+
+
+        new_order = Order.objects.create(**order_data)
+
+        if new_order:
+            for item in order_items:
+                test = {
+                    "game": Game.objects.get(id=item["id"]),
+                    "order": new_order,
+                    "price": item["price"],
+                    "quantity": item["qty"]
+                }
+
+                OrderItem.objects.create(**test)
+
+        return Response(
+            status=status.HTTP_200_OK,
+        )
+
+
 
 
 class OrderItemViewSet(viewsets.ModelViewSet):
@@ -219,7 +262,7 @@ class OrderItemViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         if self.action in ["list", "retrieve"]:
             return OrderItemSerializer
-        return OrderItemSerializer
+        return OrderItemWriteSerializer
 
     def get_queryset_for_admins(self):
         return OrderItem.objects.all()

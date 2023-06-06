@@ -22,7 +22,7 @@ class Brand(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     foreign = models.BooleanField(default=True)
-    image = models.ImageField(null=True, blank=True, default="/placeholder.png")
+    image = models.ImageField(null=True, blank=True)
     link = models.URLField(max_length=200, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -38,7 +38,7 @@ class Game(models.Model):
     brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True, blank=True)
     name = models.CharField(max_length=200, null=True, blank=True)
     stripe_code = models.CharField(max_length=200, null=True, blank=True)
-    image = models.ImageField(null=True, blank=True, default="/placeholder.png")
+    image = models.ImageField(null=True, blank=True)
     min_age = models.IntegerField(null=True, blank=True, default=0)
     description = models.TextField(null=True, blank=True)
     rating = models.DecimalField(max_digits=7, decimal_places=2, null=True, blank=True)
@@ -80,7 +80,7 @@ class ShippingAddress(models.Model):
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    payment_method = models.CharField(max_length=200, null=True, blank=True)
+    payment_method = models.CharField(default="Card", max_length=200, null=True, blank=True)
     address = models.ForeignKey(ShippingAddress, on_delete=models.SET_NULL, null=True)
     tax_price = models.DecimalField(
         max_digits=7, decimal_places=2, null=True, blank=True
@@ -91,7 +91,7 @@ class Order(models.Model):
     shipping_price = models.DecimalField(
         max_digits=7, decimal_places=2, null=True, blank=True
     )
-    paid = models.BooleanField(default=False)
+    paid = models.BooleanField(default=True)
     paid_at = models.DateTimeField(auto_now_add=False, null=True, blank=True)
     delivered = models.BooleanField(default=False)
     delivered_at = models.DateTimeField(auto_now_add=False, null=True, blank=True)

@@ -9,6 +9,8 @@ from apps.shop.models import (
 )
 from rest_framework import serializers
 
+from datetime import datetime
+
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -26,6 +28,7 @@ class GameSerializer(serializers.ModelSerializer):
     category = serializers.SerializerMethodField()
     brand = serializers.SerializerMethodField()
     num_of_reviews = serializers.SerializerMethodField()
+    created_at = serializers.SerializerMethodField()
 
     class Meta:
         model = Game
@@ -54,6 +57,9 @@ class GameSerializer(serializers.ModelSerializer):
 
     def get_num_of_reviews(self, instance):
         return instance.review_set.all().count()
+    
+    def get_created_at(self, instance):
+        return instance.created_at.strftime("%m/%d/%y")
 
 
 class GameWriteSerializer(serializers.ModelSerializer):
@@ -74,9 +80,36 @@ class GameWriteSerializer(serializers.ModelSerializer):
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    created_at = serializers.SerializerMethodField()
+    user_name = serializers.SerializerMethodField()
+    user_image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Review
+        fields = [
+            'game',
+            'user_name',
+            'user_image',
+            'title',
+            'rating',
+            'comment',
+            'created_at'
+        ]
+
+    def get_created_at(self, instance):
+        return instance.created_at.strftime("%B %d, %Y")
+    
+    def get_user_name(self, instance):
+        return instance.user.first_name +' '+ instance.user.last_name
+    
+    def get_user_image(self, instance):
+        return instance.user.image.url if instance.user.image else None
+
+class ReviewWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = "__all__"
+        
 
 
 class ShippingAddressSerializer(serializers.ModelSerializer):
@@ -85,13 +118,61 @@ class ShippingAddressSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class OrderSerializer(serializers.ModelSerializer):
+class OrderWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = "__all__"
 
+class OrderSerializer(serializers.ModelSerializer):
+    address = serializers.SerializerMethodField()
+    order_items = serializers.SerializerMethodField()
+    created_at = serializers.SerializerMethodField()
+    class Meta:
+        model = Order
+        fields = [
+            "id",
+            "payment_method",
+            "tax_price",
+            "total_price",
+            "shipping_price",
+            "paid",
+            "paid_at",
+            "delivered",
+            "delivered_at",
+            "created_at",
+            "user",
+            "address",
+            "order_items"
+        ]
 
-class OrderItemSerializer(serializers.ModelSerializer):
+    def get_address(self, instance):
+        return instance.address.address or None
+    
+    def get_order_items(self, instance):
+        order_items = OrderItem.objects.filter(order_id=instance.id)
+        return OrderItemSerializer(order_items, many=True).data
+    
+    def get_created_at(self, instance):
+        return instance.created_at.strftime("%B %d, %Y")
+
+
+
+class OrderItemWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderItem
         fields = "__all__"
+
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    game = serializers.SerializerMethodField()
+    class Meta:
+        model = OrderItem
+        fields = [
+            'game',
+            'order',
+            'quantity',
+            'price'
+        ]
+
+    def get_game(self, instance):
+        return GameSerializer(instance.game).data

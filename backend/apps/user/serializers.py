@@ -6,10 +6,10 @@ from .models import User
 class UserDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["id", "username", "first_name", "last_name", "date_joined", "email"]
+        fields = ["id", "username", "first_name", "last_name", "date_joined", "email", "image"]
 
 
 class UserWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "username", "email", "password"]
+        fields = ["first_name", "last_name", "username", "email", "password", "image"]

@@ -40,6 +40,31 @@ class UserViewset(viewsets.ModelViewSet):
             data=UserDetailSerializer(request.user).data,
             status=status.HTTP_200_OK,
         )
+    
+    @action(
+        detail=False,
+        methods=["patch"],
+        url_path="update_info",
+        permission_classes=[permissions.IsAuthenticated],
+    )
+    def update_info(self, request: Request):
+        print(request.user)
+
+        data = {
+            "first_name": request.data['firstName'],
+            "last_name": request.data['lastName'],
+            "username": request.data['username']
+        }
+
+        User.objects.filter(id = request.user.id).update(**data)
+        # request.user.update(**data)
+
+        return Response(
+            data=UserDetailSerializer(User.objects.get(id = request.user.id)).data,
+            status=status.HTTP_200_OK,
+        )
+
+
 
 
 class SignInViewSet(APIView):
