@@ -15,3 +15,15 @@ export const fetchReviews = (id: string) => {
 export const fetchAddress = () => {
   return api.get('api/shipping-address')
 }
+
+export const createOrder = async (data) => {
+  return api.post('api/order/create_order', data)
+}
+
+export const getOrdersHistory = async () => {
+  return api.get('api/order')
+}
+
+export const addReview = async (data) => {
+  return api.post('api/review', data)
+}

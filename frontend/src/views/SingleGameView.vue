@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { fetchGame, fetchReviews } from '../api/index'
+import { fetchGame, fetchReviews, addReview } from '../api/index'
 import boardGame from '../assets/board-games.png'
 import ReviewCard from '@/components/ReviewCard.vue'
 import { useToast } from 'vue-toastification'
+import { useUserStore } from '@/store/userStore'
 
 const toast = useToast()
 
@@ -14,9 +15,15 @@ const props = defineProps({
   }
 })
 
+const user = useUserStore()
 let game = ref({})
 let reviews = ref([])
 let qty = ref(1)
+let newReview = ref({
+  rating: 0,
+  title: '',
+  comment: ''
+})
 
 async function getGames(id: string) {
   const data = await fetchGame(id)
@@ -32,9 +39,29 @@ function validateQty() {
   return game.value.count_in_stock > qty.value && qty.value >= 0
 }
 
+const submitReview = async () => {
+  const payload = {
+    ...newReview.value,
+    game: game.value.id,
+    user: user.id
+  }
+  const { error } = await addReview(payload)
+
+  if (error) {
+    toast.error('Something went wrong when adding a review ', {
+      timeout: 2000
+    })
+    return
+  }
+
+  getReviews(props.id)
+}
+
 function addItemToCart() {
   if (!validateQty()) {
-    console.log('Can not order more than it is in stock')
+    toast.info('Can not add more items than we there are in stock', {
+      timeout: 2000
+    })
     return
   }
   let cart = localStorage.getItem('cart')
@@ -105,17 +132,41 @@ onMounted(() => {
         </div>
       </div>
     </div>
-    <div class="mt-10">
-      <div class="text-3xl">REVIEWS</div>
-      <div class="mt-10" v-if="reviews.length > 0">
-        <ReviewCard
-          v-for="review in reviews"
-          :key="review.id"
-          :item="review"
-          class="mt-5"
-        ></ReviewCard>
+    <div class="flex flex-row w-full">
+      <div class="mt-10 w-5/6">
+        <div class="text-3xl">REVIEWS</div>
+        <div v-if="reviews?.length > 0">
+          <ReviewCard :reviews="reviews" class="mt-6"></ReviewCard>
+        </div>
+        <div class="text-lg" v-else>No Reviews for this game!</div>
       </div>
-      <div class="mt-10 text-lg" v-else>No Reviews for this game!</div>
+      <div class="flex flex-col mt-10 w-1/2 h-1/4" v-if="user.isLoggedIn">
+        <div class="text-2xl mb-3">Add comment</div>
+        <div class="flex">
+          <va-input v-model="newReview.title" class="mr-9" label="Title" placeholder="Add Title" />
+          <va-input
+            v-model="newReview.rating"
+            label="Rating 0-100"
+            type="number"
+            placeholder="Add Rating"
+          />
+        </div>
+        <va-input
+          v-model="newReview.comment"
+          class="w-full mt-6"
+          type="textarea"
+          label="Comment"
+          placeholder="Add Comment"
+          autosize
+        />
+        <va-button
+          class="w-1/3 mt-2"
+          @click="submitReview"
+          :disabled="newReview.comment.length < 1 || newReview.title.length < 1"
+        >
+          Submit
+        </va-button>
+      </div>
     </div>
   </div>
 </template>

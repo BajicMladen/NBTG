@@ -11,6 +11,7 @@ const userData = JSON.parse(localStorage.getItem('userData'))
 
 if (userData) {
   user.setUser({
+    id: userData.id,
     firstName: userData.first_name,
     lastName: userData.last_name,
     email: userData.email,

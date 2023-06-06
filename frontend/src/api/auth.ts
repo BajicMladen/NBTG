@@ -11,3 +11,7 @@ export const logIn = async (data) => {
 export const getCurrentUser = async () => {
   return api.get('api/user/current-user/')
 }
+
+export const updateProfile = async (data) => {
+  return api.patch('api/user/update_info/', data)
+}

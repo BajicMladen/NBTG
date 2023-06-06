@@ -12,6 +12,8 @@ let search = ref('')
 let currentPage = ref(1)
 let pages = ref()
 
+let curoselData = ref([])
+
 async function getGames(params: object = {}) {
   const data = await fetchGames(params)
   pages.value = Math.floor(data.data.count / 5)
@@ -30,15 +32,16 @@ watch(currentPage, () => {
   getGames({ page: currentPage.value })
 })
 
-onMounted(() => {
-  getGames()
+onMounted(async () => {
+  await getGames()
+  curoselData.value = games.value
 })
 </script>
 
 <template>
   <div class="mt-2">
     <carousel :items-to-show="5">
-      <slide v-for="game in games" class="flex flex-col" :key="games.id">
+      <slide v-for="game in curoselData" class="flex flex-col" :key="games.id">
         <img :src="game.image ?? boardGame" class="w-52 h-40" alt="game_image.png" />
         <div class="text-lg text-black">{{ game.name }}</div>
       </slide>

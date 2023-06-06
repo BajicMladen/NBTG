@@ -15,16 +15,8 @@ const router = useRouter()
 
 const stripe = useStripe()
 
-const checkout = () => {
-  let checkoutItems = items.value.map((x) => {
-    return { price: x.stripe_code, quantity: x.qty }
-  })
-  console.log(checkoutItems)
-  stripe.checkout(checkoutItems)
-}
-
 let items = ref([])
-let price = ref(1)
+let price = ref(0)
 let discount = ref(0)
 
 let addresses = ref({
@@ -48,6 +40,16 @@ watch(
   },
   { deep: true }
 )
+
+const checkout = () => {
+  localStorage.setItem('checkoutAddress', JSON.stringify(addresses.value.value))
+
+  let checkoutItems = items.value.map((x) => {
+    return { price: x.stripe_code, quantity: x.qty }
+  })
+  console.log(checkoutItems)
+  stripe.checkout(checkoutItems)
+}
 
 const getAddress = async () => {
   const { data, error } = await fetchAddress()
@@ -78,7 +80,7 @@ const calculatePrice = () => {
   let test = 0
   if (items?.value?.length) {
     items.value.forEach((x) => {
-      test = test + parseInt(x.price)
+      test = test + parseInt(x.price) * x.qty
     })
     price.value = test
   }
@@ -121,7 +123,7 @@ const goToLogIn = () => {
           Final Sum: ${{ price - discount }}
         </div>
       </div>
-      <div class="flex flex-col justify-between">
+      <div class="flex flex-col justify-between" v-if="user.isLoggedIn">
         <div>Select Address:</div>
         <va-select v-model="addresses.value" :options="addresses.options" />
       </div>

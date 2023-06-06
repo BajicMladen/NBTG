@@ -1,7 +1,17 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
+import { createOrder } from '../api/index'
 
-onMounted(() => {
+onMounted(async () => {
+  const checkoutAddress = JSON.parse(localStorage.getItem('checkoutAddress'))
+  const items = JSON.parse(localStorage.getItem('cart'))
+  if (items && checkoutAddress) {
+    let price = items.reduce((acc, obj) => {
+      return acc + parseInt(obj.price)
+    }, 0)
+    await createOrder({ address: checkoutAddress.value, price: price, items: [...items] })
+  }
+
   localStorage.removeItem('cart')
 })
 </script>
