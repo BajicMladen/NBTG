@@ -27,3 +27,7 @@ export const getOrdersHistory = async () => {
 export const addReview = async (data) => {
   return api.post('api/review', data)
 }
+
+export const addAddress = async (data) => {
+  return api.post('api/shipping-address', data)
+}

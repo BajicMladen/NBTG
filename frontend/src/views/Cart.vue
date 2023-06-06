@@ -7,6 +7,7 @@ import { useToast } from 'vue-toastification'
 import { fetchAddress } from '../api/index'
 import useStripe from './../components/stripe/useStripe.js'
 import { watch } from 'vue'
+import addAdressModal from '@/components/modals/addAdressModal.vue'
 
 const toast = useToast()
 
@@ -125,7 +126,10 @@ const goToLogIn = () => {
       </div>
       <div class="flex flex-col justify-between" v-if="user.isLoggedIn">
         <div>Select Address:</div>
-        <va-select v-model="addresses.value" :options="addresses.options" />
+        <div class="flex flex-row">
+          <va-select v-model="addresses.value" :options="addresses.options" />
+          <addAdressModal :userId="user.id" @new-address="getAddress"></addAdressModal>
+        </div>
       </div>
       <hr />
       <div class="flex justify-center" v-if="user.isLoggedIn">

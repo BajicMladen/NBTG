@@ -31,6 +31,7 @@ const handleSubmit = async () => {
   localStorage.setItem('userData', JSON.stringify(data))
   user.setUser({
     id: userData.id,
+    image: userData.image,
     firstName: data.first_name,
     lastName: data.last_name,
     email: data.email,

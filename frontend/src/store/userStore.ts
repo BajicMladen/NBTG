@@ -7,12 +7,14 @@ export const useUserStore = defineStore('userStore', {
     firstName: '',
     lastName: '',
     username: '',
-    email: ''
+    email: '',
+    image: ''
   }),
   actions: {
     setUser(data: UserInfo) {
       ;(this.isLoggedIn = true),
         (this.id = data.id),
+        (this.image = data.image),
         (this.firstName = data.firstName),
         (this.lastName = data.lastName),
         (this.username = data.username),
@@ -24,7 +26,8 @@ export const useUserStore = defineStore('userStore', {
         (this.firstName = ''),
         (this.lastName = ''),
         (this.username = ''),
-        (this.email = '')
+        (this.email = ''),
+        (this.image = '')
     }
   }
 })
