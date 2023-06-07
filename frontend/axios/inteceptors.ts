@@ -4,6 +4,7 @@ export const useTokenInterceptors = (instance) => {
       const tokens = JSON.parse(localStorage.getItem('tokens'))
       if (tokens) {
         config.headers.Authorization = `Bearer ${tokens.access}`
+        config.headers['Content-Type'] = 'multipart/form-data'
       }
       return config
     },

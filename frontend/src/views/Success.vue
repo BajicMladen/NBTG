@@ -9,7 +9,12 @@ onMounted(async () => {
     let price = items.reduce((acc, obj) => {
       return acc + parseInt(obj.price)
     }, 0)
-    await createOrder({ address: checkoutAddress.value, price: price, items: [...items] })
+    await createOrder({
+      address: checkoutAddress.value,
+      price: price,
+      items: [...items],
+      count: parseInt(items.length)
+    })
   }
 
   localStorage.removeItem('cart')

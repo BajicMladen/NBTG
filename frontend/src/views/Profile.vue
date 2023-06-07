@@ -27,7 +27,8 @@ let columns = [
 ]
 
 async function getOrders() {
-  const data = await getOrdersHistory()
+  const params = { user: user.id }
+  const data = await getOrdersHistory(params)
   items.value = data.data.results
 }
 
@@ -46,6 +47,7 @@ async function updateProfileData() {
   localStorage.setItem('userData', JSON.stringify(data))
   user.setUser({
     id: data.id,
+    isAdmin: data.is_admin,
     image: data.image,
     firstName: data.first_name,
     lastName: data.last_name,
@@ -98,12 +100,12 @@ onMounted(async () => {
                 <div class="ml-4">
                   <va-icon size="small" name="category" color="secondary" class="mr-2" />
                   <span class="va-link">Category:&nbsp</span>
-                  <span class="va-link">{{ item.game.category }}</span>
+                  <span class="va-link">{{ item.game.category_name }}</span>
                 </div>
                 <div class="ml-4">
                   <va-icon size="small" name="branding_watermark" color="secondary" class="mr-2" />
                   <span class="va-link">Brand:&nbsp</span>
-                  <span class="va-link">{{ item.game.brand }}</span>
+                  <span class="va-link">{{ item.game.brand_name }}</span>
                 </div>
                 <div class="ml-4">
                   <va-icon size="small" name="star_half" color="secondary" class="mr-2" />

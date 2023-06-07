@@ -48,6 +48,33 @@ const router = createRouter({
       }
     },
     {
+      path: '/admin/games',
+      name: 'gamesAdmin',
+      component: () => import('../views/admin/GamesAdmin.vue'),
+      beforeEnter: (to, from) => {
+        const user = useUserStore()
+        if (!user.isLoggedIn || !user.isAdmin) return from
+      }
+    },
+    {
+      path: '/admin/orders',
+      name: 'ordersAdmin',
+      component: () => import('../views/admin/OrdersAdmin.vue'),
+      beforeEnter: (to, from) => {
+        const user = useUserStore()
+        if (!user.isLoggedIn || !user.isAdmin) return from
+      }
+    },
+    {
+      path: '/admin/users',
+      name: 'usersAdmin',
+      component: () => import('../views/admin/GamesAdmin.vue'),
+      beforeEnter: (to, from) => {
+        const user = useUserStore()
+        if (!user.isLoggedIn || !user.isAdmin) return from
+      }
+    },
+    {
       path: '/success',
       name: 'success',
       component: () => import('../views/Success.vue'),

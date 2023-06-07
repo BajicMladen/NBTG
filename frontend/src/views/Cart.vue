@@ -5,7 +5,7 @@ import { useUserStore } from '@/store/userStore'
 import { useRouter } from 'vue-router'
 import { useToast } from 'vue-toastification'
 import { fetchAddress } from '../api/index'
-import useStripe from './../components/stripe/useStripe.js'
+import useStripe from '@/components/stripe/useStripe.js'
 import { watch } from 'vue'
 import addAdressModal from '@/components/modals/addAdressModal.vue'
 
@@ -44,7 +44,7 @@ watch(
 
 const checkout = () => {
   localStorage.setItem('checkoutAddress', JSON.stringify(addresses.value.value))
-
+  debugger
   let checkoutItems = items.value.map((x) => {
     return { price: x.stripe_code, quantity: x.qty }
   })
@@ -53,7 +53,8 @@ const checkout = () => {
 }
 
 const getAddress = async () => {
-  const { data, error } = await fetchAddress()
+  const params = { created_by: user.id }
+  const { data, error } = await fetchAddress(params)
 
   if (error) {
     return

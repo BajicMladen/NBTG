@@ -4,6 +4,7 @@ from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.permissions import DjangoModelPermissions, IsAuthenticatedOrReadOnly
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.db import transaction
 
 from .models import Brand, Category, Game, Order, OrderItem, Review, ShippingAddress
 from .pagination import StandardResultsSetPagination
@@ -151,8 +152,8 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
 
 class ShippingAddressViewSet(viewsets.ModelViewSet):
-    filter_backends = [SearchFilter, OrderingFilter]
-    filterset_fields = ["address", "city", "postal_code", "country"]
+    filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
+    filterset_fields = ["address", "city", "postal_code", "country","created_by"]
     search_fields = ["address", "city", "postal_code", "country"]
     ordering_fields = ["address", "city", "postal_code", "country"]
     pagination_class = StandardResultsSetPagination
@@ -176,7 +177,7 @@ class ShippingAddressViewSet(viewsets.ModelViewSet):
 
 
 class OrderViewSet(viewsets.ModelViewSet):
-    filter_backends = [SearchFilter, OrderingFilter]
+    filter_backends = [SearchFilter, OrderingFilter, DjangoFilterBackend]
     search_fields = [
         "user__username",
         "address__city",
@@ -192,6 +193,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         "shipping_price",
         "paid",
         "delivered",
+        "user"
     ]
     ordering_fields = ["total_price", "paid", "delivered"]
     pagination_class = StandardResultsSetPagination
@@ -219,6 +221,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         url_path="create_order",
         # permission_classes=[permissions.IsAuthenticated],
     )
+    @transaction.atomic
     def create_order(self, request):
 
         address = ShippingAddress.objects.get(id=request.data['address'])
@@ -229,18 +232,17 @@ class OrderViewSet(viewsets.ModelViewSet):
             "total_price": request.data['price']
         }
 
-        order_items = request.data['items']
-
+        # order_items = request.data['items']
 
         new_order = Order.objects.create(**order_data)
 
         if new_order:
-            for item in order_items:
+            for index in range(int(request.data['count'])):
                 test = {
-                    "game": Game.objects.get(id=item["id"]),
+                    "game": Game.objects.get(id=request.data[f'items[{index}][id]']),
                     "order": new_order,
-                    "price": item["price"],
-                    "quantity": item["qty"]
+                    "price": request.data[f'items[{index}][price]'],
+                    "quantity": request.data[f'items[{index}][qty]']
                 }
 
                 OrderItem.objects.create(**test)

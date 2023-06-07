@@ -25,8 +25,8 @@ class BrandSerializer(serializers.ModelSerializer):
 
 
 class GameSerializer(serializers.ModelSerializer):
-    category = serializers.SerializerMethodField()
-    brand = serializers.SerializerMethodField()
+    category_name = serializers.SerializerMethodField()
+    brand_name = serializers.SerializerMethodField()
     num_of_reviews = serializers.SerializerMethodField()
     created_at = serializers.SerializerMethodField()
 
@@ -47,12 +47,14 @@ class GameSerializer(serializers.ModelSerializer):
             "price",
             "created_at",
             "num_of_reviews",
+            "category_name",
+            "brand_name"
         ]
 
-    def get_category(self, instance):
+    def get_category_name(self, instance):
         return instance.category.name if instance.category else None
 
-    def get_brand(self, instance):
+    def get_brand_name(self, instance):
         return instance.brand.name if instance.brand else None
 
     def get_num_of_reviews(self, instance):
@@ -76,6 +78,7 @@ class GameWriteSerializer(serializers.ModelSerializer):
             "rating",
             "count_in_stock",
             "price",
+            "stripe_code"
         ]
 
 
@@ -127,6 +130,9 @@ class OrderSerializer(serializers.ModelSerializer):
     address = serializers.SerializerMethodField()
     order_items = serializers.SerializerMethodField()
     created_at = serializers.SerializerMethodField()
+    user_name = serializers.SerializerMethodField()
+    paid = serializers.SerializerMethodField()
+    delivered = serializers.SerializerMethodField()
     class Meta:
         model = Order
         fields = [
@@ -142,11 +148,21 @@ class OrderSerializer(serializers.ModelSerializer):
             "created_at",
             "user",
             "address",
-            "order_items"
+            "order_items",
+            "user_name"
         ]
+
+    def get_paid(self, instance):
+        return  'Yes' if instance.paid else 'No'
+    
+    def get_delivered(self, instance):
+        return  'Yes' if instance.paid else 'No'
 
     def get_address(self, instance):
         return instance.address.address or None
+    
+    def get_user_name(self, instance):
+        return instance.user.username or None
     
     def get_order_items(self, instance):
         order_items = OrderItem.objects.filter(order_id=instance.id)

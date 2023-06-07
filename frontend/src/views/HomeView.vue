@@ -52,9 +52,8 @@ onMounted(async () => {
     </carousel>
     <div class="flex flex-col mt-10">
       <div class="text-3xl mb-10">List of Games</div>
-      <div class="flex flex-row">
-        <div class="mr-3 text-xl">Search:</div>
-        <input type="search" class="border-2 border-black mb-4 w-40 h-8" v-model="search" />
+      <div class="w-1/5">
+        <va-input v-model="search" class="mb-6" label="Search" placeholder="Search" />
       </div>
       <div class="flex flex-row flex-wrap">
         <ItemCard v-for="game in games" :item="game" :key="game.id" class="mr-3 mb-3"></ItemCard>

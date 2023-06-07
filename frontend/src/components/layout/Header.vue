@@ -13,11 +13,21 @@ const goToHomePage = () => {
 const goToProfile = () => {
   router.push({ name: 'profile' })
 }
+const goToOrdersPage = () => {
+  router.push({ name: 'ordersAdmin' })
+}
+const goToGamesPage = () => {
+  router.push({ name: 'gamesAdmin' })
+}
+const goToUsersPage = () => {
+  router.push({ name: 'usersAdmin' })
+}
 
 const logout = () => {
   localStorage.removeItem('tokens')
   localStorage.removeItem('userData')
   localStorage.removeItem('cart')
+  localStorage.removeItem('checkoutAddress')
   user.resetUser()
   goToHomePage()
 }
@@ -30,6 +40,20 @@ const logout = () => {
       <div class="flex flex-row">
         <va-icon class="mr-1 mt-1" name="shopping_cart" />
         <RouterLink to="/cart" class="mr-8">Cart</RouterLink>
+      </div>
+      <div class="flex flex-row mr-6" v-if="user.isAdmin">
+        <va-icon class="mr-1 mt-1" name="build" />
+        <va-dropdown class="bg-transparent">
+          <template #anchor>
+            <div class="bg-transparent cursor-pointer">Dashboard</div>
+          </template>
+
+          <va-dropdown-content class="z-10 flex flex-col justify-center items-center w-28 gap-1">
+            <div @click="goToOrdersPage" class="cursor-pointer">Orders</div>
+            <div @click="goToGamesPage" class="cursor-pointer">Games</div>
+            <div @click="goToUsersPage" class="cursor-pointer">Users</div>
+          </va-dropdown-content>
+        </va-dropdown>
       </div>
       <div class="flex flex-row" v-if="!user.isLoggedIn">
         <RouterLink to="/login">Login</RouterLink>

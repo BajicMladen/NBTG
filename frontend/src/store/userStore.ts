@@ -4,6 +4,7 @@ export const useUserStore = defineStore('userStore', {
   state: () => ({
     isLoggedIn: false,
     id: null,
+    isAdmin: false,
     firstName: '',
     lastName: '',
     username: '',
@@ -14,6 +15,7 @@ export const useUserStore = defineStore('userStore', {
     setUser(data: UserInfo) {
       ;(this.isLoggedIn = true),
         (this.id = data.id),
+        (this.isAdmin = data.isAdmin),
         (this.image = data.image),
         (this.firstName = data.firstName),
         (this.lastName = data.lastName),
@@ -23,6 +25,7 @@ export const useUserStore = defineStore('userStore', {
     resetUser() {
       ;(this.isLoggedIn = false),
         (this.id = null),
+        (this.isAdmin = false),
         (this.firstName = ''),
         (this.lastName = ''),
         (this.username = ''),
@@ -33,6 +36,9 @@ export const useUserStore = defineStore('userStore', {
 })
 
 interface UserInfo {
+  id: number | null
+  is_admin: boolean
+  image: string
   isLoggedIn: boolean
   firstName: string
   lastName: string

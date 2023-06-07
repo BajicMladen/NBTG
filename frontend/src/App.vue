@@ -12,6 +12,7 @@ const userData = JSON.parse(localStorage.getItem('userData'))
 if (userData) {
   user.setUser({
     id: userData.id,
+    isAdmin: userData.is_admin,
     image: userData.image,
     firstName: userData.first_name,
     lastName: userData.last_name,

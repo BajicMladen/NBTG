@@ -43,6 +43,7 @@ const getUserData = async () => {
   localStorage.setItem('userData', JSON.stringify(data))
   user.setUser({
     id: data.id,
+    isAdmin: data.is_admin,
     image: data.image,
     firstName: data.first_name,
     lastName: data.last_name,
